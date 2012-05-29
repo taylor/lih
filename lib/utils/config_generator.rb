@@ -1,4 +1,4 @@
-# LIH::Utils::ConfigGenerator -- generate configs based on yaml, erb
+# Utils::ConfigGenerator -- generate configs based on yaml, erb
 # templates, or default conf files
 #
 # License: http://codecafe.com/LICENSE-mit
@@ -7,7 +7,10 @@
 
 $debug=(!ENV['DEBUG'].nil? and ENV['DEBUG'] == "1") ? true : false
 require 'pp' if $debug
+
+require 'fileutils'
 require 'yaml'
+require 'erb'
 
 module LIH
   module Utils

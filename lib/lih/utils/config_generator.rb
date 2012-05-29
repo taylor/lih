@@ -1,8 +1,6 @@
 # LIH::Utils::ConfigGenerator -- generate configs based on yaml, erb
 # templates, or default conf files
 #
-# From -- github.com/taylor/lih/utils/config_generator.rb
-#
 # License: http://codecafe.com/LICENSE-mit
 #
 # Copyright (c) 2012 Taylor Carpenter <taylor@codecafe.com>

@@ -1,0 +1,17 @@
+# Yaml config for host uranium.home.solid-constructs.com
+
+:hostname: uranium.home.solid-constructs.com
+:username: backupuser
+:private_keys: =/root/.ssh/special_key_for_accessing_uranium.home.solid-constructs.com
+:file_systems: 
+  /: 
+    :excludes: 
+    - /boot
+    - /proc
+    - /sys
+    - /mnt/data
+    :path: /
+  /boot:
+    :path: /boot
+  /mnt/data: 
+    :path: /mnt/data

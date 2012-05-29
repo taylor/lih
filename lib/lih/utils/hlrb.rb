@@ -1,3 +1,5 @@
+# Copyright (c) 2012 Wayne Walker <wwalker@solid-constructs.com>
+
 require 'yaml'
 require 'logger'
 

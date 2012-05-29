@@ -1,0 +1,50 @@
+#!/usr/bin/env ruby
+
+require 'rubygems'
+
+$debug=(!ENV['DEBUG'].nil? and ENV['DEBUG'] == "1") ? true : false
+require 'pp' if $debug
+
+script_path = Dir.chdir(File.expand_path(File.dirname(__FILE__))) { Dir.pwd }
+lib_path = Dir.chdir(script_path + '/../lib') { Dir.pwd }
+$:.unshift lib_path
+
+require 'lih/utils/hlrb'
+
+HardLinkRsyncBackup.new.run
+
+exit
+
+__END__
+REMOTE_HOST=$1
+shift
+
+
+
+SOURCE=${REMOTE_HOST}:/
+
+  if [ -n "$BACKUP_PATH" ]; then
+    TARGET_DIR="${TARGET_DIR}_${BACKUP_PATH/\//_}"
+    SOURCE="${SOURCE}${BACKUP_PATH}"
+    fi
+
+    cd $TARGET_DIR
+
+    LATEST=`ls -1 | grep ^201[0-9] | tail -1`
+    echo $LATEST
+    DATE=`date +%Y-%m-%d_%H-%M-00`
+    echo $DATE
+
+    date > log/${DATE}.log
+
+    pwd
+
+    cp -al $LATEST/. $DATE
+
+    date >> log/${DATE}.log
+
+    cd $DATE
+
+    CMD="rsync -avPHxz --exclude core --delete $* ${SOURCE}/. ${TARGET_DIR}/${DATE}/"
+    echo $CMD >> ../log/${DATE}.log 2>&1
+    $CMD >> ../log/${DATE}.log 2>&1

@@ -5,6 +5,10 @@
 #
 # Copyright (c) 2012 Taylor Carpenter <taylor@codecafe.com>
 
+$debug=(!ENV['DEBUG'].nil? and ENV['DEBUG'] == "1") ? true : false
+require 'pp' if $debug
+require 'yaml'
+
 module LIH
   module Utils
     class ConfigGenerator
@@ -16,8 +20,7 @@ module LIH
         @tmpl_ext = @@default_template_ext
         @create_directories = args[:create_directories].nil? ? false : true
 
-        @DEBUG=(!ENV['DEBUG'].nil? and ENV['DEBUG'] == "1") ? true : false
-        if @DEBUG
+        if $debug
           print "ConfigGenerator initialize args: "
           pp args
           puts
@@ -47,11 +50,11 @@ module LIH
       def generate_config_files(conf_list=[])
         return if conf_list.empty?
 
-        puts "#generate_config_files()" if @DEBUG
+        puts "#generate_config_files()" if $debug
 
         FileUtils.mkdir_p(@conf_dir) if @create_directories and not File.exists?(@conf_dir)
 
-        puts "conf list: #{conf_list.inspect}" if @DEBUG
+        puts "conf list: #{conf_list.inspect}" if $debug
 
         conf_list.each do |conf|
           conf_path = "#{@conf_dir}/#{conf}"
@@ -71,7 +74,7 @@ module LIH
                 o.puts ERB.new(tmpl, nil, "").result(binding)
               rescue NoMethodError => ex
                 $stderr.puts
-                $stderr.puts ex.backtrace if @DEBUG
+                $stderr.puts ex.backtrace if $debug
                 $stderr.puts  "ERROR: #{ex.message} (#{ex.class})"
                 $stderr.puts
                 FileUtils.rm(conf_path) if File.exists?(conf_path)
